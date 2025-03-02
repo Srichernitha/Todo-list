@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styled To-Do List</title>
+    <style>
+        body {
+            background-color: #1b2a1b;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            width: 50%;
+            background: #132a13;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+        input {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+        .add-btn { background: white; color: black; }
+        .task {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #213d21;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        .task span {
+            flex: 1;
+        }
+        .completed { text-decoration: line-through; color: gray; }
+        .edit-btn { color: #00ff99; cursor: pointer; }
+        .complete-btn { color: orange; cursor: pointer; }
+        .delete-btn { color: red; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Create your Todo-List</h2>
+        <input type="text" id="taskInput" placeholder="What are your tasks for today?">
+        <button class="add-btn" onclick="addTask()">Add</button>
+        <div id="taskList"></div>
+    </div>
+
+    <script>
+        function addTask() {
+            let taskInput = document.getElementById("taskInput");
+            let taskText = taskInput.value.trim();
+            if (taskText === "") return;
+            
+            let taskDiv = document.createElement("div");
+            taskDiv.classList.add("task");
+            
+            let taskSpan = document.createElement("span");
+            taskSpan.textContent = taskText;
+            
+            let editBtn = document.createElement("span");
+            editBtn.textContent = "EDIT";
+            editBtn.classList.add("edit-btn");
+            editBtn.onclick = function() {
+                let newText = prompt("Edit Task:", taskSpan.textContent);
+                if (newText) taskSpan.textContent = newText;
+            };
+            
+            let completeBtn = document.createElement("span");
+            completeBtn.textContent = "COMPLETED";
+            completeBtn.classList.add("complete-btn");
+            completeBtn.onclick = function() {
+                taskSpan.classList.toggle("completed");
+            };
+            
+            let deleteBtn = document.createElement("span");
+            deleteBtn.textContent = "DELETE";
+            deleteBtn.classList.add("delete-btn");
+            deleteBtn.onclick = function() {
+                taskDiv.remove();
+            };
+            
+            taskDiv.appendChild(taskSpan);
+            taskDiv.appendChild(editBtn);
+            taskDiv.appendChild(completeBtn);
+            taskDiv.appendChild(deleteBtn);
+            
+            document.getElementById("taskList").appendChild(taskDiv);
+            taskInput.value = "";
+        }
+    </script>
+</body>
+</html>
